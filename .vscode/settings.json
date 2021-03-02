@@ -1,3 +1,12 @@
 {
-    "python.pythonPath": "C:\\Users\\jches\\anaconda3\\envs\\tensor\\python.exe"
+    "python.pythonPath": "C:\\Users\\jches\\anaconda3\\envs\\jobsearch\\python.exe",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:JobSearch}/db.sqlite3",
+            "name": "JobSearch Database"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }
