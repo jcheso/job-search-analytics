@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
+import time
+import sys
 
 from .models import SearchInput
 from . import main
@@ -14,6 +16,7 @@ def search_results(request):
         job_search = request.GET.get('job_search', None)
         location_search = request.GET.get('location_search', None)
 
+    tic = time.perf_counter()
     average_pay, most_frequent_location, count_companies, currency = main.get_analytics(job_search,location_search)
     context = { 
         'job_search': job_search,
@@ -23,6 +26,10 @@ def search_results(request):
         'count_companies': count_companies,
         'currency': currency
     }
+    
+    toc = time.perf_counter()
+    print(toc-tic, file=sys.stderr)
+
     template = loader.get_template('searchengine/results.html')
     return HttpResponse(template.render(context, request))
 
