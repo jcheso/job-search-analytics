@@ -1,6 +1,8 @@
+from careerjet_api import CareerjetAPIClient
+import concurrent.futures
 import socket
 import pandas as pd
-from careerjet_api import CareerjetAPIClient
+import time
 
 # TODO: Capitalise the search terms in search results
 # TODO: Add number of jobs next to companies in search results
@@ -10,9 +12,7 @@ from careerjet_api import CareerjetAPIClient
 # TODO: Refactor this code
 # TODO: Add loading bar while scraping text
 
-
 def get_analytics(job, location):
-            
       # Set locale for job search - full list of locale available here https://pypi.org/project/careerjet-api/#description
       cj = CareerjetAPIClient("en_GB")
 
@@ -24,36 +24,45 @@ def get_analytics(job, location):
       jobs = pd.DataFrame()
 
       # Initial search to return number of pages to search
-      result_json = cj.search({
-                              'pagesize': 99,
-                              'location': location,
-                              'keywords': job,
-                              'affid': '99e2f6a324cd6491b8124db8f1eeb3e5',
-                              'user_ip': ip_address,
-                              'url': 'http://www.example.com/jobsearch?q=python&l=london',
-                              'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
-      })
-
-      pages = result_json['pages']
-
-      # Iterate through all pages and save job data to DataFrame
-      for page in range(pages+1):
-            print('Scraping page:', page)
+      def get_job_details(page):
+            print('Scraping page', page)
             result_json = cj.search({
-                                    'pagesize': 99,
-                                    'location': location,
-                                    'keywords': job,
-                                    'affid': '99e2f6a324cd6491b8124db8f1eeb3e5',
-                                    'user_ip': ip_address,
-                                    'url': 'http://www.example.com/jobsearch?q=python&l=london',
-                                    'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
-                                    'page': page
-                                    })
-            temp = result_json['jobs']
-            jobs_temp = pd.DataFrame(data=temp)
-            jobs = jobs.append(jobs_temp, ignore_index=True)
+                  'location': location,
+                  'keywords': job,
+                  'affid': '99e2f6a324cd6491b8124db8f1eeb3e5',
+                  'user_ip': ip_address,
+                  'url': 'http://www.example.com/jobsearch?q=python&l=london',
+                  'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+                  'page': page
+                  })
             print('Completed scraping page:', page)
+            temp = result_json['jobs']
+            return temp
 
+      def get_no_pages(job, location):
+            result_json = cj.search({
+            'location': location,
+            'keywords': job,
+            'affid': '99e2f6a324cd6491b8124db8f1eeb3e5',
+            'user_ip': ip_address,
+            'url': 'http://www.example.com/jobsearch?q=python&l=london',
+            'user_agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+            })
+            no_pages = result_json['pages']
+            pages = list(range(1,no_pages))
+            return pages
+
+      pages = get_no_pages(job, location)
+
+      with concurrent.futures.ThreadPoolExecutor(max_workers = 128) as executor:
+            futures = []
+            jobs = pd.DataFrame()
+            for page_no in pages:
+                  futures.append(executor.submit(get_job_details, page=page_no))
+            for future in concurrent.futures.as_completed(futures):
+                  result = future._result
+                  jobs_temp = pd.DataFrame(data=result)
+                  jobs = jobs.append(jobs_temp, ignore_index=True)
 
       # Convert salaries to numeric data format
       jobs['salary_max'] = pd.to_numeric(jobs['salary_max'])
@@ -90,4 +99,7 @@ def get_analytics(job, location):
 
       return(average_pay, most_frequent_location, top_companies, currency)
 
+# st = time.time()  
 # get_analytics('software engineer', 'london')
+# ft = time.time()
+# print(ft-st)
