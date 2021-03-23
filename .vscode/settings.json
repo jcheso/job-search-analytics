@@ -8,5 +8,7 @@
             "name": "JobSearch Database"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

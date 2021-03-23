@@ -7,6 +7,10 @@
 import pandas as pd
 
 def get_job_analytics(jobs, job, location):
+    #Tidy up search results
+    job = job.capitalize()
+    location = location.capitalize()
+    
     jobs.drop_duplicates(inplace=True, ignore_index=True)
 
     # Convert salaries to numeric data format
@@ -27,6 +31,12 @@ def get_job_analytics(jobs, job, location):
 
     # Job company analytics
     count_companies =  jobs['company'].value_counts()
-    top_companies = count_companies[1:11].index.to_list
+    top_companies = count_companies.index.to_list()
+    top_companies_no = count_companies.to_list()
+    companies_dict = dict(zip(top_companies, top_companies_no)) 
+    companies_dict.pop('')
+
+
+
 
     return(average_pay, most_frequent_location, top_companies, currency)
