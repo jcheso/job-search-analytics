@@ -16,14 +16,15 @@ def search_results(request):
         job_search = request.GET.get('job_search', None)
         location_search = request.GET.get('location_search', None)
 
-    average_pay, most_frequent_location, count_companies, currency = main.get_analytics(job_search,location_search)
+    average_pay, most_frequent_location, count_companies, currency, top_words = main.get_analytics(job_search,location_search)
     context = { 
         'job_search': job_search,
         'location_search': location_search,
         'average_pay': average_pay,
         'most_frequent_location': most_frequent_location,
-        'count_companies': count_companies,
-        'currency': currency
+        'count_companies': count_companies['companies'][0:10],
+        'currency': currency,
+        'top_words': top_words[0:10]
     }
 
     template = loader.get_template('searchengine/results.html')

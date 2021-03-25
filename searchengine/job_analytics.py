@@ -5,6 +5,7 @@
 
 import pandas as pd
 from textblob import TextBlob
+from nltk.corpus import words
 
 def get_job_analytics(jobs, job, location):
     #Tidy up search results
@@ -50,16 +51,19 @@ def get_job_analytics(jobs, job, location):
             blob = TextBlob(temp_str)
             blob_parsed = blob.noun_phrases
             temp_bag.append(blob_parsed)
-
+            
         # TODO: FIX THIS
         for list in temp_bag:
             if len(list)>1:
                 for word in list:
-                  new_bag.append(word)
-            else:
-                temp_str = str(list)
-                temp_str.split(' ')
-                for new_word in temp_str:
+                    new_words = word.split(" ")
+                    for new_word in new_words:
+                            new_bag.append(new_word)         
+            elif len(list)==1:
+                list_blob = TextBlob(str(list))
+                words = list_blob.words
+                for new_word in words:
+                    new_word=new_word.strip("'")
                     new_bag.append(new_word)
         return new_bag
 
@@ -69,7 +73,7 @@ def get_job_analytics(jobs, job, location):
     df_of_words = pd.DataFrame(bag_of_words_title)
     df_of_words.append(bag_of_words_descript)
     df_of_words.columns = ['words']
-    df_of_words = df_of_words[df_of_words.words != ' ']
-    common_words = df_of_words.value_counts()
+    word_count = df_of_words.value_counts()
+    top_words = word_count.index.to_list()
 
-    return(average_pay, most_frequent_location, companies_df, currency)
+    return(average_pay, most_frequent_location, companies_df, currency, top_words)

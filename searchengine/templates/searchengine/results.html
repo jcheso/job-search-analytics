@@ -51,6 +51,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
                                 {% for company in count_companies %}
                                     <li> {{company}} </li>
                                 {% endfor %}</p>
+      <p class="w3-text-black">The top 10 skills  are currently:
+                                {% for skill in top_words %}
+                                    <li> {{skill}} </li>
+                                {% endfor %}</p>
+                                
     </div>
   </div>
 </div>
