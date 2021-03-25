@@ -1,10 +1,10 @@
 # TODO: Exception control
 # TODO: Filter out empty listings in top companies
 # TODO: Find a way to remove recruiting agencies from companies hiring?
-# TODO: Capitalise the search terms in search results
 # TODO: Add number of jobs next to companies in search results
 
 import pandas as pd
+from textblob import TextBlob
 
 def get_job_analytics(jobs, job, location):
     #Tidy up search results
@@ -33,10 +33,43 @@ def get_job_analytics(jobs, job, location):
     count_companies =  jobs['company'].value_counts()
     top_companies = count_companies.index.to_list()
     top_companies_no = count_companies.to_list()
-    companies_dict = dict(zip(top_companies, top_companies_no)) 
-    companies_dict.pop('')
+    companies_df = pd.DataFrame()
+    companies_df['companies'] = top_companies
+    companies_df['no of jobs'] = top_companies_no
+    companies_df = companies_df[companies_df.companies != '']
 
+    # Highest occuring keywords
+    def bag_of_words(column):
+        rows = range(len(jobs.index))
+        temp_bag = []
+        new_bag = []
+        for row in rows:
+            temp_str = jobs[column][row]
+            # for word in temp_str:
+            #     temp_str = temp_str + word
+            blob = TextBlob(temp_str)
+            blob_parsed = blob.noun_phrases
+            temp_bag.append(blob_parsed)
 
+        # TODO: FIX THIS
+        for list in temp_bag:
+            if len(list)>1:
+                for word in list:
+                  new_bag.append(word)
+            else:
+                temp_str = str(list)
+                temp_str.split(' ')
+                for new_word in temp_str:
+                    new_bag.append(new_word)
+        return new_bag
 
+    bag_of_words_title = bag_of_words('title')
+    bag_of_words_descript = bag_of_words('description')
 
-    return(average_pay, most_frequent_location, top_companies, currency)
+    df_of_words = pd.DataFrame(bag_of_words_title)
+    df_of_words.append(bag_of_words_descript)
+    df_of_words.columns = ['words']
+    df_of_words = df_of_words[df_of_words.words != ' ']
+    common_words = df_of_words.value_counts()
+
+    return(average_pay, most_frequent_location, companies_df, currency)
