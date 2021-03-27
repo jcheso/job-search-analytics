@@ -2,6 +2,7 @@
 # TODO: Find a way to remove recruiting agencies from companies hiring?
 # TODO: Add number of jobs next to companies in search results
 
+from os import terminal_size
 import pandas as pd
 from textblob import TextBlob
 
@@ -29,6 +30,7 @@ def get_job_analytics(jobs, job, location):
     average_pay_max = int(jobs_salary['salary_max'].mean())
 
     # Calculate the most frequent job location
+    number_of_jobs = len(jobs['title'])
     most_frequent_location = jobs['locations'].value_counts().idxmax()
 
     # Calculate the companies with the most job listings
@@ -48,8 +50,6 @@ def get_job_analytics(jobs, job, location):
         new_bag = []
         for row in rows:
             temp_str = jobs[column][row]
-            # for word in temp_str:
-            #     temp_str = temp_str + word
             blob = TextBlob(temp_str)
             blob_parsed = blob.noun_phrases
             temp_bag.append(blob_parsed)
@@ -67,13 +67,23 @@ def get_job_analytics(jobs, job, location):
                     new_word = new_word.strip("'")
                     new_bag.append(new_word)
         return new_bag
+
     bag_of_words_title = bag_of_words('title')
     bag_of_words_descript = bag_of_words('description')
     df_of_words = pd.DataFrame(bag_of_words_title)
     df_of_words.append(bag_of_words_descript)
     df_of_words.columns = ['words']
+
+    search_terms = job.split() +location.split()
+    for term in search_terms:
+        df_of_words = df_of_words[df_of_words.words != term.lower()]
     df_of_words = df_of_words[df_of_words.words != '']
     word_count = df_of_words.value_counts()
+    top_word_count = word_count.to_list()
     top_words = word_count.index.to_list()
+    words_df = pd.DataFrame()
+    words_df['word'] = top_words
+    words_df['count'] = top_word_count
+    top_words = words_df.values.tolist()
 
-    return(average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location)
+    return(number_of_jobs, average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location)

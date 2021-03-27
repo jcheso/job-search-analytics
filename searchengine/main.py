@@ -11,9 +11,9 @@ from . import job_analytics
 def get_analytics(job, location):
 
     jobs = job_data.get_job_data(job, location)
-    average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location = job_analytics.get_job_analytics(
+    number_of_jobs, average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location = job_analytics.get_job_analytics(
         jobs, job, location)
 
-    return(average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location)
+    return(number_of_jobs, average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location)
 
 # get_analytics('software engineer', 'london')
