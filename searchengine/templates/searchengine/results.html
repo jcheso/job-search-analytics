@@ -1,37 +1,81 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
 <!-- First Grid -->
-<div class="text-pink-600">
-<h1>Your job analytics calculated from {{ number_of_jobs }} listings</h1>
-
-<h5>
-  The average salary range for a {{ job_search }} in {{ location_search }} is {{average_pay_min }} to {{ average_pay_max }} {{ currency }} a year
-</h5>
-
-<h5>The most common location is {{ most_frequent_location }}</h5>
-
-<div>
-  Top companies currently hiring:
-
-  <table>
-    <tr>
-      {% for companies in top_companies %}
-      <td>{{companies.0}}</td>
-      <td>{{companies.1}}</td>
-    </tr>
-    {% endfor %}
-  </table>
+<div class="text-pink-600 flex flex-col text-center">
+  <div>
+    <p class="text-4xl font-black p-4">Here are your job analytics calculated from {{ number_of_jobs }} listings</p>
+  </div>
+  <div>
+    <p class="text-lg p-2">
+      The average salary range for a {{ job_search }} in {{ location_search }}
+      is {{average_pay_min }} to {{ average_pay_max }} {{ currency }} a year
+    </p>
+  </div>
+  <div>
+    <p p class="text-lg p-2">The most common location is {{ most_frequent_location }}</p>
+  </div>
+  <div class="flex flex-row">
+  <div class="text">
+    Top companies currently hiring:
+    <table class="table-fixed">
+      <tbody>
+        <tr>
+          {% for companies in top_companies %}
+          <td>{{companies.0}}</td>
+          <td>{{companies.1}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div>
+    Trending skills:
+    <table class="table-fixed">
+      <tbody>
+        <tr>
+          {% for word in top_words %}
+          <td>{{word.0.0}}</td>
+          <td>{{word.1}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  </div>
 </div>
-<div>
-  Trending skills:
-  <table>
-    <tr>
-      {% for word in top_words %}
-      <td>{{word.0.0}}</td>
-      <td>{{word.1}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-</div>
+<p class="text-lg text-center font-bold m-5">Gradient Table Design</p>
+<table class="rounded-t-lg m-5 w-5/6 mx-auto text-gray-100 bg-gradient-to-l from-indigo-500 to-indigo-800">
+  <tr class="text-left border-b-2 border-indigo-300">
+    <th class="px-4 py-3">Firstname</th>
+    <th class="px-4 py-3">Lastname</th>
+    <th class="px-4 py-3">Age</th>
+    <th class="px-4 py-3">Sex</th>
+  </tr>
+
+  <tr class="border-b border-indigo-400">
+    {% for word in top_words %}
+    <td class="px-4 py-3">{{word.0.0}}<br></td>
+    <td class="px-4 py-3">{{wo  rd.1}}<br></td>
+            {% endfor %}
+
+    <td class="px-4 py-3">50</td>
+    <td class="px-4 py-3">Male</td>
+  </tr>    
+<!-- each row -->
+  <tr class="border-b border-indigo-400">
+    <td class="px-4 py-3">Jill</td>
+    <td class="px-4 py-3">Smith</td>
+    <td class="px-4 py-3">50</td>
+    <td class="px-4 py-3">Male</td>
+  </tr>    
+<!-- each row -->
+  <tr class="border-b border-indigo-400">
+    <td class="px-4 py-3">Jill</td>
+    <td class="px-4 py-3">Smith</td>
+    <td class="px-4 py-3">50</td>
+    <td class="px-4 py-3">Male</td>
+  </tr>    
+<!-- each row -->
+
+</table>
 {% endblock %}

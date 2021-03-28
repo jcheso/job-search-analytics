@@ -1,41 +1,50 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
-<div class="md:flex md:justify-center mb-6">
+<div class="w-24 md:w-auto">
   <form type="get" action="results/" style="margin: 0">
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-        Job Title
-      </label>
-      <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="search_box"
-        type="text"
-        name="job_search"
-        placeholder="Job Title"
-      />
-    </div>
+    <div class="flex flex-row space-x-12">
+      <div class="w-full md:w-1/3">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="username"
+        >
+          Job Title
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="search_box"
+          type="text"
+          name="job_search"
+          placeholder="Job Title"
+        />
+      </div>
 
-    <div class="mb-6">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-        Location
-      </label>
-      <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="search_box"
-        type="text"
-        name="location_search"
-        placeholder="Location"
-      />
-    </div>
+      <div class="w-full md:w-1/3">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="username"
+        >
+          Location
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="search_box"
+          type="text"
+          name="location_search"
+          placeholder="Location"
+        />
+      </div>
 
-    <div class="flex items-center justify-between">
-      <button
-        class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-      >
-        Search
-      </button>
+        <button
+          class="px-8 rounded bg-red-500 text-gray-800 font-bold p-4 uppercase border-yellow-500 "
+        >
+          Search
+
+    </div>
     </div>
   </form>
 </div>
+<div>
+
 
 {% endblock %}
