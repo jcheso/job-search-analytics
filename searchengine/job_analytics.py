@@ -1,8 +1,5 @@
 # TODO: Exception control
-# TODO: Find a way to remove recruiting agencies from companies hiring?
-# TODO: Add number of jobs next to companies in search results
 
-from os import terminal_size
 import pandas as pd
 from textblob import TextBlob
 
@@ -14,7 +11,7 @@ def get_job_analytics(jobs, job, location):
     location = location.capitalize()
 
     # Drop duplicate job listings
-    jobs.drop_duplicates(inplace=True, ignore_index=True)
+    jobs.drop_duplicates(subset=['title', 'description', 'company', 'locations'], inplace=True, ignore_index=True)
 
     # Convert salaries to numeric data format
     jobs['salary_max'] = pd.to_numeric(jobs['salary_max'])
@@ -59,12 +56,14 @@ def get_job_analytics(jobs, job, location):
                 for word in list:
                     new_words = word.split(" ")
                     for new_word in new_words:
+                        new_word = new_word.capitalize()
                         new_bag.append(new_word)
             elif len(list) == 1:
                 list_blob = TextBlob(str(list))
                 words = list_blob.words
                 for new_word in words:
                     new_word = new_word.strip("'")
+                    new_word = new_word.capitalize()
                     new_bag.append(new_word)
         return new_bag
 

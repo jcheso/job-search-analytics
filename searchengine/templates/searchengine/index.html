@@ -1,175 +1,41 @@
-{% extends 'bulma/base.html' %}
-{% block title %}JobSearch Analytica{% endblock %}
-{% block content %}
-{% load static %}
+{% extends 'base.html' %} {% block content %} {% load static %}
 
-<section class="hero is-info is-large">
-  <div class="hero-head">
-    <nav class="navbar">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item">
-            <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
-          </a>
-          <span class="navbar-burger" data-target="navbarMenuHeroB">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </div>
-        <div id="navbarMenuHeroB" class="navbar-menu">
-          <div class="navbar-end">
-            <a class="navbar-item is-active">
-              Home
-            </a>
-            <a class="navbar-item">
-              Examples
-            </a>
-            <a class="navbar-item">
-              Documentation
-            </a>
-            <span class="navbar-item">
-              <a class="button is-info is-inverted">
-                <span class="icon">
-                  <i class="fab fa-github"></i>
-                </span>
-                <span>Submit Feedback</span>
-              </a>
-            </span>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </div>
-
-  <div class="hero-body">
-    <div class="container has-text-centered">
-      <p class="title">
-        Title
-      </p>
-      <p class="subtitle">
-        Subtitle
-      </p>
-    </div>
-  </div>
-
-  <div class="hero-foot">
-    <nav class="tabs is-boxed is-fullwidth">
-      <div class="container">
-        <ul>
-          <li class="is-active">
-            <a>Overview</a>
-          </li>
-          <li>
-            <a>Modifiers</a>
-          </li>
-          <li>
-            <a>Grid</a>
-          </li>
-          <li>
-            <a>Elements</a>
-          </li>
-          <li>
-            <a>Components</a>
-          </li>
-          <li>
-            <a>Layout</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</section>
-
-
-
-<html lang="en">
-  <title>JobSearch Analytica</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Montserrat"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-  />
-  <style>
-    body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
-    .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-    .fa-anchor,.fa-coffee {font-size:200px}
-    body, html {
-        height: 100%;
-    }
-
-    /* The hero image */
-    .hero-image {
-      /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("{% static '/searchengine/pexels-lukas-684387.jpg' %}");
-
-      /* Set a specific height */
-      height: 50%;
-
-      /* Position and center the image to scale nicely on all screens */
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-
-    /* Place text in the middle of the image */
-    .hero-text {
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-    }
-          }
-  </style>
-  <body>
-    <!-- Header -->
-    <header
-      class="w3-container hero-image w3-center"
-      style="padding: 96px 16px"
-    >
-      <h1 class="w3-margin w3-jumbohero-text">JobSearch Analytica</h1>
-      <p class="w3-xlarge">Informing your career choices</p>
-
-      <form type="get" action="results/" style="margin: 0">
-        <input
-          id="search_box"
-          type="text"
-          name="job_search"
-          placeholder="Job Title"
-        />
-        <input
-          id="search_box"
-          type="text"
-          name="location_search"
-          placeholder="Location"
-        />
-        <button type="submit">Search</button>
-      </form>
-    </header>
-
-    <div class="w3-container w3-black w3-center w3-opacity w3-padding-8">
-      <h1 class="w3-margin w3-xlarge">Created by JC Studio</h1>
+<div class="md:flex md:justify-center mb-6">
+  <form type="get" action="results/" style="margin: 0">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        Job Title
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="search_box"
+        type="text"
+        name="job_search"
+        placeholder="Job Title"
+      />
     </div>
 
-    <!-- Footer -->
-    <footer class="w3-container w3-padding-64 w3-center w3-opacity">
-      <div class="w3-xlarge w3-padding-32">
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
-      </div>
-    </footer>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        Location
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="search_box"
+        type="text"
+        name="location_search"
+        placeholder="Location"
+      />
+    </div>
 
-{% endblock content %}
+    <div class="flex items-center justify-between">
+      <button
+        class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+      >
+        Search
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
