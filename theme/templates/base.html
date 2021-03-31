@@ -18,7 +18,10 @@
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
       .gradient {
-        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+        {% comment %} background: linear-gradient(90deg, #d53369 0%, #daae51 100%); {% endcomment %}
+        {% comment %} background: linear-gradient(90deg, #e91d1d 0%, #0077ff 100%); {% endcomment %}
+        background: linear-gradient(90deg, rgba(2,228,186,1) 0%, rgba(29,156,253,1) 53%, rgba(141,69,252,1) 100%);
+        {% comment %} background: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); {% endcomment %}
       }
     </style>
   </head>
@@ -107,15 +110,13 @@
       </svg>
     </div>
 
-    <section class="bg-white border-b py-20">
-
+  <section class="bg-white border-b py-20">
 	<div class="flex justify-center content-center">
 		<div>
 				{% block content %}
 				{% endblock %}
 		</div>
 	</div>
-
 	</section>
 
     <!--Footer-->

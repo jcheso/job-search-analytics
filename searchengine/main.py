@@ -16,4 +16,4 @@ def get_analytics(job, location):
 
     return(number_of_jobs, average_pay_min, average_pay_max, most_frequent_location, top_companies, currency, top_words, job, location)
 
-# get_analytics('offshore wind', 'london')
+# get_analytics('finance analyst', 'australia')

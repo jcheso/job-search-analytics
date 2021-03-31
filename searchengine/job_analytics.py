@@ -73,9 +73,10 @@ def get_job_analytics(jobs, job, location):
     df_of_words.append(bag_of_words_descript)
     df_of_words.columns = ['words']
 
-    search_terms = job.split() +location.split()
+    search_terms = job.split() + location.split()
     for term in search_terms:
-        df_of_words = df_of_words[df_of_words.words != term.lower()]
+        term = term.capitalize()
+        df_of_words = df_of_words[df_of_words.words != term]
     df_of_words = df_of_words[df_of_words.words != '']
     word_count = df_of_words.value_counts()
     top_word_count = word_count.to_list()
