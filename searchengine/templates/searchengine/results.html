@@ -1,48 +1,106 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 
-<div class="text-pink-600 flex flex-col text-center">
-  <div>
-    <p class="text-4xl font-black p-4">
-      Here are your job analytics calculated from {{ number_of_jobs }} listings
-    </p>
+<div class="flex flex-col justify-center content-center align-center">
+  <div
+    class="
+      text-2xl
+      font-bold
+      leading-normal
+      mb-2
+      text-gray-800 text-center
+      uppercase
+      text-center
+    "
+    id="header"
+  >
+    Here are your job analytics calculated from {{ number_of_jobs }} listings
   </div>
-  <div>
-    <p class="text-lg p-2 font-medium">
-      The average salary range for a {{ job_search }} in {{ location_search }}
-      is {{average_pay_min }} to {{ average_pay_max }} {{ currency }} a year
-    </p>
+  <div
+    id="summary"
+    class="
+      leading-normal
+      text-center
+      mt-0
+      mb-2
+      text-gray-500
+      font-semibold
+      my-2
+    "
+  >
+    The average salary range for a {{ job_search }} in {{ location_search }} is
+    {{average_pay_min }} to {{ average_pay_max }} {{ currency }} a year
   </div>
-  <div>
-    <p p class="text-lg p-2 font-medium">
-      The most common location is {{ most_frequent_location }}
-    </p>
-  </div>
-  <div class="grid gap-4 grid-cols-2 justify-center text-lg ">
-    <div class="text-left text-lg font-black">
-      Top companies currently hiring:
-      <table class="table-fixed font-medium">
-        <tbody>
-          {% for companies in top_companies %}
-          <tr>
-            <td>{{companies.0}}</td>
-            <td>{{companies.1}}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div
+    id="results-container"
+    class="flex flex-row p-4 m-4 justify-center text-lg"
+  >
+    <div
+      id="results-companies"
+      class="
+        flex flex-col
+        m-4
+        text-gray-800
+        p-10
+        m-2
+        bg-gray-50
+        shadow-xl
+        rounded-2xl
+        justify-center
+      "
+    >
+      <div class="mt-4 mb-2 text-center font-bold w-64 underline">
+        Top Companies
+      </div>
+      <div class="flex justify-center">
+        <table class="table-auto font-medium m-4 content-center">
+          <thead>
+            <tr>
+              <th class="text-center">Company</th>
+              <th class="text-center">Jobs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for companies in top_companies %}
+            <tr>
+              <td class="text-center">{{companies.0}}</td>
+              <td class="text-center">{{companies.1}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="text-left text-lg font-black">
-      Trending skills:
-      <table class="table-fixed font-medium">
-        <tbody>
-          {% for word in top_words %}
-          <tr>
-            <td>{{word.0.0}}</td>
-            <td>{{word.1}}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div
+      id="results-skills"
+      class="
+        flex flex-col
+        m-4
+        text-gray-800
+        p-10
+        m-2
+        bg-gray-50
+        shadow-xl
+        rounded-2xl
+        justify-center
+      "
+    >
+      <div class="mb-2 mt-4 text-center font-bold w-64 underline">
+        Top Skills
+      </div>
+      <div class="flex justify-center">
+        <table class="table-fixed font-medium m-4 content-center">
+          <th class="text-center font-semibold">Skill</th>
+          <th class="text-center font-semibold">Count</th>
+          <tbody>
+            {% for word in top_words %}
+            <tr>
+              <td class="text-center">{{word.0.0}}</td>
+              <td class="text-center">{{word.1}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
