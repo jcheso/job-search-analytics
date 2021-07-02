@@ -1,6 +1,5 @@
 asgiref==3.3.1
 astroid==2.5.1
-autopep8 @ file:///tmp/build/80754af9/autopep8_1615918855173/work
 beautifulsoup4==4.9.3
 careerjet-api==3.2
 certifi==2020.12.5
